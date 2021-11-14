@@ -8,6 +8,9 @@
 export default {
   name: "App",
   components: {},
+  created() {
+    this.$store.dispatch("loadFoods");
+  },
 };
 </script>
 
@@ -16,14 +19,15 @@ export default {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   color: #2c3e50;
   background-color: #fafafa;
-  padding: 24px;
+  padding: 0 12px;
   box-sizing: border-box;
 }
 
-html,
-body,
-#app {
-  height: 100%;
+body {
+  margin: 20px auto;
+  max-width: 1200px;
+  width: 100%;
+  min-height: calc(100vh - 40px);
 }
 
 * {
