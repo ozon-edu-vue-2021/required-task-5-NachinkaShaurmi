@@ -2,6 +2,9 @@
   <div class="header">
     <h2 class="title">{{ title }}</h2>
     <router-link :to="path" class="button">{{ linkTitle }}</router-link>
+    <router-link v-show="secondButton" :to="path2" class="button">{{
+      linkTitle2
+    }}</router-link>
   </div>
 </template>
 
@@ -17,9 +20,21 @@ export default {
       type: String,
       default: "/",
     },
+    path2: {
+      type: String,
+      default: "/",
+    },
     linkTitle: {
       type: String,
       default: "to Home",
+    },
+    linkTitle2: {
+      type: String,
+      default: "to Home",
+    },
+    secondButton: {
+      type: Boolean,
+      default: false,
     },
   },
 };

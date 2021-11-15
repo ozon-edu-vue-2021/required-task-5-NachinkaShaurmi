@@ -1,12 +1,34 @@
 <template>
-  <div>favorites</div>
+  <div>
+    <Header :title="'Favorites'" :path="'/'" :linkTitle="'to Catalog'" />
+    <div class="cards">
+      <Card
+        v-for="food in getFavorites"
+        :key="food.uid"
+        :title="food.dish"
+        :price="food.id"
+        :id="food.uid"
+        :path="food.imgPath"
+        :isFavorite="food.isFavorite"
+      />
+    </div>
+  </div>
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+import Card from "@/components/Card.vue";
+import Header from "@/components/Header.vue";
+
 export default {
   name: "Favorites",
-  props: [],
-  computed: {},
+  components: {
+    Header,
+    Card,
+  },
+  computed: {
+    ...mapGetters(["getFavorites"]),
+  },
   methods: {},
 };
 </script>

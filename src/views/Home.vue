@@ -1,6 +1,13 @@
 <template>
   <div>
-    <Header title="Catalog" path="/cart" linkTitle="to Cart" />
+    <Header
+      :title="'Catalog'"
+      :secondButton="true"
+      :path="'/cart'"
+      :path2="'/favorites'"
+      :linkTitle="'to Cart'"
+      :linkTitle2="'to Favorites'"
+    />
     <div class="cards">
       <Card
         v-for="food in foods"
@@ -8,6 +15,8 @@
         :title="food.dish"
         :price="food.id"
         :id="food.uid"
+        :path="food.imgPath"
+        :isFavorite="food.isFavorite"
       />
     </div>
   </div>
@@ -30,7 +39,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
 .cards {
   margin-top: 20px;
   display: flex;

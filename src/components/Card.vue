@@ -2,7 +2,7 @@
   <div class="card">
     <img
       class="card__img"
-      :src="`./images/${imgPath}.webp`"
+      :src="`./images/${path}.webp`"
       alt="food image"
       width="200"
     />
@@ -20,17 +20,17 @@
         type="number"
         min="1"
       />
+      <button class="button" :class="{ fav: isFavorite }" @click="toFavorite">
+        add to Fav
+      </button>
     </div>
   </div>
 </template>
 
 <script>
-import randomImg from "@/helpers/randomImg";
-
 export default {
   name: "Card",
   data: () => ({
-    imgPath: randomImg(),
     count: 1,
   }),
   props: {
@@ -46,16 +46,27 @@ export default {
       type: Number,
       default: 1000,
     },
+    path: {
+      type: String,
+      default: "6123150777",
+    },
+    isFavorite: {
+      type: Boolean,
+      default: false,
+    },
   },
   computed: {},
   methods: {
     add() {
       this.$store.commit("ADD_TO_CART", {
-        id: this.id,
+        uid: this.id,
         title: this.title,
         price: this.price,
         count: this.count,
       });
+    },
+    toFavorite() {
+      this.$store.commit("TOGGLE_TO_FAVORITES", this.id);
     },
   },
 };
@@ -77,12 +88,10 @@ export default {
 }
 
 .input-wrapper {
+  width: 100%;
   display: flex;
   align-items: center;
-}
-
-.input-wrapper__label {
-  margin-right: 20px;
+  justify-content: space-between;
 }
 
 .card__count {
@@ -93,5 +102,9 @@ export default {
   display: flex;
   align-items: center;
   justify-content: space-between;
+}
+
+.fav {
+  background-color: pink;
 }
 </style>

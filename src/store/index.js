@@ -2,6 +2,7 @@ import Vue from "vue";
 import Vuex from "vuex";
 import axios from "axios";
 import VueAxios from "vue-axios";
+import randomImg from "@/helpers/randomImg";
 
 Vue.use(Vuex);
 Vue.use(VueAxios, axios);
@@ -9,7 +10,6 @@ Vue.use(VueAxios, axios);
 export default new Vuex.Store({
   state: {
     foods: [],
-    favorite: [],
     inCart: [],
   },
   actions: {
@@ -27,20 +27,30 @@ export default new Vuex.Store({
   },
   mutations: {
     SET_FOODS(state, payload) {
-      state.foods = payload;
+      state.foods = payload.map((el) => ({
+        ...el,
+        isFavorite: false,
+        inCart: false,
+        imgPath: randomImg(),
+      }));
     },
     REMOVE_FROM_CART(state, payload) {
-      state.inCart = state.inCart.filter((el) => el.id !== payload);
+      state.inCart = state.inCart.filter((el) => el.uid !== payload);
     },
     ADD_TO_CART(state, payload) {
-      const alreadyInCart = state.inCart.some((el) => el.id === payload.id);
-      console.log(alreadyInCart);
+      const alreadyInCart = state.inCart.some((el) => el.uid === payload.uid);
       if (alreadyInCart)
         state.inCart = state.inCart.map((el) => {
-          if (el.id === payload.id) el.count = payload.count;
+          if (el.uid === payload.uid) el.count = payload.count;
           return el;
         });
       else state.inCart = [...state.inCart, payload];
+    },
+    TOGGLE_TO_FAVORITES(state, payload) {
+      state.foods = state.foods.map((el) => {
+        if (el.uid === payload) el.isFavorite = !el.isFavorite;
+        return el;
+      });
     },
   },
   getters: {
@@ -48,6 +58,9 @@ export default new Vuex.Store({
       return state.inCart.length
         ? state.inCart.reduce((acc, el) => acc + el.count * el.price, 0)
         : 0;
+    },
+    getFavorites: (state) => {
+      return state.foods.filter((el) => el.isFavorite);
     },
   },
 });
