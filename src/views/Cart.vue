@@ -9,6 +9,9 @@
         <button class="button" @click="remove(food.uid)">remove</button>
       </li>
     </ul>
+    <div v-else>
+      <h3>Cart is empty</h3>
+    </div>
     <h2>Total {{ getFullCost }} $</h2>
   </div>
 </template>

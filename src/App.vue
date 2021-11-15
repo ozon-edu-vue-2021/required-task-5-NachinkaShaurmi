@@ -27,6 +27,7 @@ body {
   max-width: 1200px;
   width: 100%;
   min-height: calc(100vh - 40px);
+  padding-right: calc(20px - (100vw - 100%));
 }
 
 * {

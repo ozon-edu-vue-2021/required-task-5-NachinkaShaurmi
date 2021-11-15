@@ -8,7 +8,7 @@
       :linkTitle="'to Cart'"
       :linkTitle2="'to Favorites'"
     />
-    <div class="cards">
+    <div v-if="foods.length" class="cards">
       <Card
         v-for="food in foods"
         :key="food.uid"
@@ -18,6 +18,9 @@
         :path="food.imgPath"
         :isFavorite="food.isFavorite"
       />
+    </div>
+    <div v-else>
+      <h3>Loading</h3>
     </div>
   </div>
 </template>

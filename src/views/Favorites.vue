@@ -1,7 +1,7 @@
 <template>
   <div>
     <Header :title="'Favorites'" :path="'/'" :linkTitle="'to Catalog'" />
-    <div class="cards">
+    <div v-if="getFavorites.length" class="cards">
       <Card
         v-for="food in getFavorites"
         :key="food.uid"
@@ -11,6 +11,9 @@
         :path="food.imgPath"
         :isFavorite="food.isFavorite"
       />
+    </div>
+    <div v-else>
+      <h3>No favorite foods</h3>
     </div>
   </div>
 </template>
